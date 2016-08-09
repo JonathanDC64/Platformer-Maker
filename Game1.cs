@@ -35,9 +35,9 @@ namespace Platformer_Maker
             link = new Sprite(Content.Load<Texture2D>("link"), new Rectangle(0,0,50,50));
             link.SetCenter(0.5f, 0.5f);
             tileset = new Tileset(Content.Load<Texture2D>("mario"), 19, 12, 16);
-            tile = new Sprite(tileset.GetTile(227), new Rectangle(0, 0, 50, 50));
+            //tile = new Sprite(tileset.GetTile(19), new Rectangle(0, 0, 50, 50));
+            tile = new Sprite(tileset.GetTile(new Rectangle(0,2,3,2)), new Rectangle(0, 0, 192, 128));
 
-            
             base.Initialize();
         }
 

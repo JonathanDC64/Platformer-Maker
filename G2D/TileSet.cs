@@ -21,11 +21,15 @@ namespace Platformer_Maker.G2D
 
         public int TileDimensions { get; }
 
+        /// <summary>
+        /// Get a tile by it's id.
+        /// By default, the id of a tile is 
+        /// it's horizontal position
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Texture2D GetTile(int id)
         {
-            int dimensions = TileDimensions * TileDimensions;
-            Color[] tileData = new Color[dimensions];
-
             int x = 0;
             int y = 0;
             for(int i = 0; i < id; i++)
@@ -38,11 +42,42 @@ namespace Platformer_Maker.G2D
                 }
             }
 
-            Rectangle sourceRectanlge = new Rectangle(x * TileDimensions, y * TileDimensions, TileDimensions, TileDimensions);
+            return GetTile(x, y);
+        }
 
-            TilesetTexture.GetData<Color>(0, sourceRectanlge, tileData, 0, dimensions);
+        /// <summary>
+        /// Get a tile at a specific coordinate.
+        /// The coordinates are measured in
+        /// the number of tiles.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public Texture2D GetTile(int x, int y)
+        {
+            return GetTile(new Rectangle(x, y , 1, 1));
+        }
+        
+        /// <summary>
+        /// Gets multiple tiles that fit the supplied rectangle
+        /// and makes it into a single texture.
+        /// Eeach unit in the suplied rectangle is 
+        /// </summary>
+        /// <param name="rect">The area of the tileset to get</param>
+        /// <returns></returns>
+        public Texture2D GetTile(Rectangle rect)
+        {
+            rect.Width  = (rect.Width) * TileDimensions;
+            rect.Height = (rect.Height) * TileDimensions;
+            rect.X *= TileDimensions;
+            rect.Y *= TileDimensions;
 
-            Texture2D tile = new Texture2D(TilesetTexture.GraphicsDevice, TileDimensions, TileDimensions);
+            int dimensions = rect.Width * rect.Height * (int)System.Math.Pow(TileDimensions, 2);
+            Color[] tileData = new Color[dimensions];
+
+            TilesetTexture.GetData<Color>(0, rect, tileData, 0, dimensions);
+
+            Texture2D tile = new Texture2D(TilesetTexture.GraphicsDevice, rect.Width, rect.Height);
             tile.SetData<Color>(tileData);
 
             return tile;
