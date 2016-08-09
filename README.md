@@ -1,5 +1,5 @@
 # Platformer-Maker
-An Open Source game in which you can create and share paltformer games
+An Open Source game in which you can create and share platformer games
 
 ----------
 
