@@ -72,7 +72,7 @@ namespace Platformer_Maker.G2D
             rect.X *= TileDimensions;
             rect.Y *= TileDimensions;
 
-            int dimensions = rect.Width * rect.Height * (int)System.Math.Pow(TileDimensions, 2);
+            int dimensions = rect.Width * rect.Height * (TileDimensions ^ 2);
             Color[] tileData = new Color[dimensions];
 
             TilesetTexture.GetData<Color>(0, rect, tileData, 0, dimensions);
