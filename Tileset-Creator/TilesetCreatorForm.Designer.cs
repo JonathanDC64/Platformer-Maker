@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
 			this.panel4 = new System.Windows.Forms.Panel();
+			this.GridColorButton = new System.Windows.Forms.Button();
 			this.ZoomLabel = new System.Windows.Forms.Label();
 			this.ZoomTracker = new System.Windows.Forms.TrackBar();
 			this.TileHeightTextBox = new System.Windows.Forms.NumericUpDown();
@@ -38,21 +39,20 @@
 			this.LoadButton = new System.Windows.Forms.Button();
 			this.FileLocationTextBox = new System.Windows.Forms.TextBox();
 			this.SelectFileButton = new System.Windows.Forms.Button();
-			this.TilesetPictureBox = new System.Windows.Forms.PictureBox();
-			this.panel1 = new System.Windows.Forms.Panel();
-			this.GridColorButton = new System.Windows.Forms.Button();
 			this.GridColorDialog = new System.Windows.Forms.ColorDialog();
+			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
+			this.TilesetPicutreBox = new Tileset_Creator.TilesetPicutreBoxControl();
 			this.panel4.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ZoomTracker)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.TileHeightTextBox)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.TileWidthTextBox)).BeginInit();
-			((System.ComponentModel.ISupportInitialize)(this.TilesetPictureBox)).BeginInit();
-			this.panel1.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// panel4
 			// 
-			this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.panel4.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.panel4.Controls.Add(this.GridColorButton);
 			this.panel4.Controls.Add(this.ZoomLabel);
 			this.panel4.Controls.Add(this.ZoomTracker);
@@ -60,34 +60,49 @@
 			this.panel4.Controls.Add(this.TileWidthTextBox);
 			this.panel4.Controls.Add(this.label2);
 			this.panel4.Controls.Add(this.label1);
-			this.panel4.Location = new System.Drawing.Point(740, 41);
+			this.panel4.Location = new System.Drawing.Point(12, 438);
 			this.panel4.Name = "panel4";
-			this.panel4.Size = new System.Drawing.Size(192, 122);
+			this.panel4.Size = new System.Drawing.Size(659, 51);
 			this.panel4.TabIndex = 2;
+			// 
+			// GridColorButton
+			// 
+			this.GridColorButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+			this.GridColorButton.Location = new System.Drawing.Point(523, 6);
+			this.GridColorButton.Name = "GridColorButton";
+			this.GridColorButton.Size = new System.Drawing.Size(128, 38);
+			this.GridColorButton.TabIndex = 8;
+			this.GridColorButton.Text = "Grid Color";
+			this.GridColorButton.UseVisualStyleBackColor = true;
+			this.GridColorButton.Click += new System.EventHandler(this.GridColorButton_Click);
 			// 
 			// ZoomLabel
 			// 
+			this.ZoomLabel.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.ZoomLabel.AutoSize = true;
-			this.ZoomLabel.Location = new System.Drawing.Point(141, 45);
+			this.ZoomLabel.Location = new System.Drawing.Point(286, 19);
 			this.ZoomLabel.Name = "ZoomLabel";
-			this.ZoomLabel.Size = new System.Drawing.Size(33, 13);
+			this.ZoomLabel.Size = new System.Drawing.Size(20, 13);
 			this.ZoomLabel.TabIndex = 7;
-			this.ZoomLabel.Text = "100%";
+			this.ZoomLabel.Text = "1X";
 			// 
 			// ZoomTracker
 			// 
-			this.ZoomTracker.Location = new System.Drawing.Point(5, 41);
-			this.ZoomTracker.Minimum = 2;
+			this.ZoomTracker.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.ZoomTracker.Location = new System.Drawing.Point(3, 3);
+			this.ZoomTracker.Minimum = 1;
 			this.ZoomTracker.Name = "ZoomTracker";
-			this.ZoomTracker.Size = new System.Drawing.Size(135, 45);
+			this.ZoomTracker.Size = new System.Drawing.Size(277, 45);
 			this.ZoomTracker.TabIndex = 1;
-			this.ZoomTracker.TickStyle = System.Windows.Forms.TickStyle.None;
-			this.ZoomTracker.Value = 2;
+			this.ZoomTracker.TickStyle = System.Windows.Forms.TickStyle.Both;
+			this.ZoomTracker.Value = 1;
 			this.ZoomTracker.ValueChanged += new System.EventHandler(this.ZoomTracker_ValueChanged);
 			// 
 			// TileHeightTextBox
 			// 
-			this.TileHeightTextBox.Location = new System.Drawing.Point(101, 16);
+			this.TileHeightTextBox.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.TileHeightTextBox.Location = new System.Drawing.Point(426, 22);
 			this.TileHeightTextBox.Name = "TileHeightTextBox";
 			this.TileHeightTextBox.Size = new System.Drawing.Size(91, 20);
 			this.TileHeightTextBox.TabIndex = 5;
@@ -100,7 +115,8 @@
 			// 
 			// TileWidthTextBox
 			// 
-			this.TileWidthTextBox.Location = new System.Drawing.Point(6, 16);
+			this.TileWidthTextBox.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.TileWidthTextBox.Location = new System.Drawing.Point(334, 22);
 			this.TileWidthTextBox.Name = "TileWidthTextBox";
 			this.TileWidthTextBox.Size = new System.Drawing.Size(89, 20);
 			this.TileWidthTextBox.TabIndex = 4;
@@ -113,8 +129,9 @@
 			// 
 			// label2
 			// 
+			this.label2.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(92, 0);
+			this.label2.Location = new System.Drawing.Point(423, 6);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(61, 13);
 			this.label2.TabIndex = 3;
@@ -122,8 +139,9 @@
 			// 
 			// label1
 			// 
+			this.label1.Anchor = System.Windows.Forms.AnchorStyles.Right;
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(3, 0);
+			this.label1.Location = new System.Drawing.Point(331, 6);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(58, 13);
 			this.label1.TabIndex = 2;
@@ -132,9 +150,9 @@
 			// LoadButton
 			// 
 			this.LoadButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.LoadButton.Location = new System.Drawing.Point(740, 12);
+			this.LoadButton.Location = new System.Drawing.Point(677, 12);
 			this.LoadButton.Name = "LoadButton";
-			this.LoadButton.Size = new System.Drawing.Size(192, 23);
+			this.LoadButton.Size = new System.Drawing.Size(255, 23);
 			this.LoadButton.TabIndex = 2;
 			this.LoadButton.Text = "Load";
 			this.LoadButton.UseVisualStyleBackColor = true;
@@ -144,65 +162,56 @@
 			// 
 			this.FileLocationTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.FileLocationTextBox.Location = new System.Drawing.Point(89, 12);
+			this.FileLocationTextBox.Location = new System.Drawing.Point(108, 12);
 			this.FileLocationTextBox.Name = "FileLocationTextBox";
-			this.FileLocationTextBox.Size = new System.Drawing.Size(645, 20);
+			this.FileLocationTextBox.Size = new System.Drawing.Size(563, 20);
 			this.FileLocationTextBox.TabIndex = 1;
 			// 
 			// SelectFileButton
 			// 
-			this.SelectFileButton.Location = new System.Drawing.Point(8, 12);
+			this.SelectFileButton.Location = new System.Drawing.Point(12, 12);
 			this.SelectFileButton.Name = "SelectFileButton";
-			this.SelectFileButton.Size = new System.Drawing.Size(75, 23);
+			this.SelectFileButton.Size = new System.Drawing.Size(90, 23);
 			this.SelectFileButton.TabIndex = 0;
-			this.SelectFileButton.Text = "Select File";
+			this.SelectFileButton.Text = "Select Image";
 			this.SelectFileButton.UseVisualStyleBackColor = true;
 			this.SelectFileButton.Click += new System.EventHandler(this.SelectFileButton_Click);
 			// 
-			// TilesetPictureBox
+			// flowLayoutPanel1
 			// 
-			this.TilesetPictureBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.TilesetPictureBox.Location = new System.Drawing.Point(3, 3);
-			this.TilesetPictureBox.Name = "TilesetPictureBox";
-			this.TilesetPictureBox.Size = new System.Drawing.Size(713, 439);
-			this.TilesetPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
-			this.TilesetPictureBox.TabIndex = 3;
-			this.TilesetPictureBox.TabStop = false;
-			this.TilesetPictureBox.LoadCompleted += new System.ComponentModel.AsyncCompletedEventHandler(this.TilesetPictureBox_LoadCompleted);
+			this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.flowLayoutPanel1.AutoScroll = true;
+			this.flowLayoutPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.flowLayoutPanel1.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+			this.flowLayoutPanel1.Location = new System.Drawing.Point(677, 41);
+			this.flowLayoutPanel1.Name = "flowLayoutPanel1";
+			this.flowLayoutPanel1.Size = new System.Drawing.Size(255, 448);
+			this.flowLayoutPanel1.TabIndex = 4;
+			this.flowLayoutPanel1.WrapContents = false;
 			// 
-			// panel1
+			// TilesetPicutreBox
 			// 
-			this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.TilesetPicutreBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.panel1.AutoScroll = true;
-			this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.panel1.Controls.Add(this.TilesetPictureBox);
-			this.panel1.Location = new System.Drawing.Point(13, 42);
-			this.panel1.Name = "panel1";
-			this.panel1.Size = new System.Drawing.Size(721, 447);
-			this.panel1.TabIndex = 4;
-			// 
-			// GridColorButton
-			// 
-			this.GridColorButton.Location = new System.Drawing.Point(3, 92);
-			this.GridColorButton.Name = "GridColorButton";
-			this.GridColorButton.Size = new System.Drawing.Size(186, 27);
-			this.GridColorButton.TabIndex = 8;
-			this.GridColorButton.Text = "Grid Color";
-			this.GridColorButton.UseVisualStyleBackColor = true;
-			this.GridColorButton.Click += new System.EventHandler(this.GridColorButton_Click);
+			this.TilesetPicutreBox.Location = new System.Drawing.Point(8, 38);
+			this.TilesetPicutreBox.Name = "TilesetPicutreBox";
+			this.TilesetPicutreBox.Size = new System.Drawing.Size(663, 394);
+			this.TilesetPicutreBox.TabIndex = 3;
 			// 
 			// TilesetCreatorForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(944, 501);
-			this.Controls.Add(this.panel1);
+			this.Controls.Add(this.flowLayoutPanel1);
+			this.Controls.Add(this.TilesetPicutreBox);
 			this.Controls.Add(this.panel4);
 			this.Controls.Add(this.SelectFileButton);
 			this.Controls.Add(this.FileLocationTextBox);
 			this.Controls.Add(this.LoadButton);
+			this.MinimumSize = new System.Drawing.Size(960, 540);
 			this.Name = "TilesetCreatorForm";
 			this.Text = "Tileset Creator";
 			this.panel4.ResumeLayout(false);
@@ -210,9 +219,6 @@
 			((System.ComponentModel.ISupportInitialize)(this.ZoomTracker)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.TileHeightTextBox)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.TileWidthTextBox)).EndInit();
-			((System.ComponentModel.ISupportInitialize)(this.TilesetPictureBox)).EndInit();
-			this.panel1.ResumeLayout(false);
-			this.panel1.PerformLayout();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -229,10 +235,10 @@
 		private System.Windows.Forms.NumericUpDown TileWidthTextBox;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label1;
-		private System.Windows.Forms.PictureBox TilesetPictureBox;
-		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.Button GridColorButton;
 		private System.Windows.Forms.ColorDialog GridColorDialog;
+		private TilesetPicutreBoxControl TilesetPicutreBox;
+		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
 	}
 }
 
