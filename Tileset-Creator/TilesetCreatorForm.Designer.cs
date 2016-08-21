@@ -41,7 +41,7 @@
 			this.SelectFileButton = new System.Windows.Forms.Button();
 			this.GridColorDialog = new System.Windows.Forms.ColorDialog();
 			this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
-			this.TilesetPicutreBox = new Tileset_Creator.TilesetPicutreBoxControl();
+			this.TilesetPicutreBox = new Tileset_Creator.TilesetPictureBoxControl();
 			this.panel4.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.ZoomTracker)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.TileHeightTextBox)).BeginInit();
@@ -237,7 +237,7 @@
 		private System.Windows.Forms.Label label1;
 		private System.Windows.Forms.Button GridColorButton;
 		private System.Windows.Forms.ColorDialog GridColorDialog;
-		private TilesetPicutreBoxControl TilesetPicutreBox;
+		private TilesetPictureBoxControl TilesetPicutreBox;
 		private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
 	}
 }

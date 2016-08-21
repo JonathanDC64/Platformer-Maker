@@ -1,6 +1,6 @@
 ﻿namespace Tileset_Creator
 {
-	partial class TilesetPicutreBoxControl
+	partial class TilesetPictureBoxControl
 	{
 		/// <summary> 
 		/// Required designer variable.

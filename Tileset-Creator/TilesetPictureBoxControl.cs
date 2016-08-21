@@ -11,14 +11,14 @@ using System.Drawing.Drawing2D;
 
 namespace Tileset_Creator
 {
-	public partial class TilesetPicutreBoxControl : UserControl
+	public partial class TilesetPictureBoxControl : UserControl
 	{
 		public TilesetGrid grid;
 		public int TileWidth;
 		public int TileHeight;
 		public int ZoomLevel;
 		private Image imgOriginal;
-		public TilesetPicutreBoxControl()
+		public TilesetPictureBoxControl()
 		{
 			InitializeComponent();
 			TileWidth = 16;

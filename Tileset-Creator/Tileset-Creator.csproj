@@ -71,11 +71,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TilesetPicutreBoxControl.cs">
+    <Compile Include="TilesetPictureBoxControl.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="TilesetPicutreBoxControl.Designer.cs">
-      <DependentUpon>TilesetPicutreBoxControl.cs</DependentUpon>
+    <Compile Include="TilesetPictureBoxControl.Designer.cs">
+      <DependentUpon>TilesetPictureBoxControl.cs</DependentUpon>
     </Compile>
     <EmbeddedResource Include="TileEditorForm.resx">
       <DependentUpon>TileEditorForm.cs</DependentUpon>
@@ -95,8 +95,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="TilesetPicutreBoxControl.resx">
-      <DependentUpon>TilesetPicutreBoxControl.cs</DependentUpon>
+    <EmbeddedResource Include="TilesetPictureBoxControl.resx">
+      <DependentUpon>TilesetPictureBoxControl.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
