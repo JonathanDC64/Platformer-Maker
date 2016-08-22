@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>D:/Platformer-Maker/Platformer-Maker/Content/Audio/Coin.wav</SourceFile>
+  <SourceTime>2016-08-21T19:38:50.9600724-04:00</SourceTime>
+  <DestFile>D:/Platformer-Maker/Platformer-Maker/Content/bin/DesktopGL/Audio/Coin.xnb</DestFile>
+  <DestTime>2016-08-21T20:02:34.4717413-04:00</DestTime>
+  <Importer>WavImporter</Importer>
+  <ImporterTime>2016-03-30T02:36:08-04:00</ImporterTime>
+  <Processor>SoundEffectProcessor</Processor>
+  <ProcessorTime>2016-03-30T02:36:08-04:00</ProcessorTime>
+  <Parameters>
+    <Key>Quality</Key>
+    <Value>Best</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>
