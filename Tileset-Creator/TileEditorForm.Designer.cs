@@ -183,7 +183,7 @@
 		private System.Windows.Forms.Panel panel1;
 		private System.Windows.Forms.Panel TileEditorPanel;
 		private System.Windows.Forms.Button DoneButton;
-		private System.Windows.Forms.Button CancelButton;
+		private new System.Windows.Forms.Button CancelButton;
 		private System.Windows.Forms.NumericUpDown GridWidtTextBox;
 		private System.Windows.Forms.NumericUpDown GridHeightTextBox;
 		private System.Windows.Forms.Label label1;
