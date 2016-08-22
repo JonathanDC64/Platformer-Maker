@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Input;
 using Platformer_Maker.Files;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Platformer_Maker.Input
 {
@@ -18,46 +20,25 @@ namespace Platformer_Maker.Input
 		public void InitializeInput()
 		{
 			if (FileManager.FileExists(InputConfig.Filename))
-			{
 				inputConfig = FileManager.ReadObjectFile<InputConfig>(InputConfig.Filename);
-			}
 			else
-			{
 				FileManager.WriteObjectFile<InputConfig>(inputConfig, InputConfig.Filename);
-			}
-
-			//todo add extra stuff here
+			
+			Update();
 		}
+
+		public static Dictionary<string, bool> Inputs = new Dictionary<string, bool>();
 
 		public void Update()
 		{
-			keyboardState = Keyboard.GetState();
-			if (keyboardState.IsKeyDown(inputConfig.Up))
-			{
-				
-			}
-			if (keyboardState.IsKeyDown(inputConfig.Down))
-			{
-
-			}
-			if (keyboardState.IsKeyDown(inputConfig.Left))
-			{
-
-			}
-			if (keyboardState.IsKeyDown(inputConfig.Right))
-			{
-
-			}
-			if (keyboardState.IsKeyDown(inputConfig.Jump))
-			{
-
-			}
-			if (keyboardState.IsKeyDown(inputConfig.Run))
-			{
-
-			}
+			keyboardState	= Keyboard.GetState();
+			Inputs["Up"]	= keyboardState.IsKeyDown(inputConfig.Up);
+			Inputs["Down"]	= keyboardState.IsKeyDown(inputConfig.Down);
+			Inputs["Left"]	= keyboardState.IsKeyDown(inputConfig.Left);
+			Inputs["Right"] = keyboardState.IsKeyDown(inputConfig.Right);
+			Inputs["Jump"]	= keyboardState.IsKeyDown(inputConfig.Jump);
+			Inputs["Run"]	= keyboardState.IsKeyDown(inputConfig.Run);
 		}
-
 
 		public static Keys StringToKey(string text)
 		{

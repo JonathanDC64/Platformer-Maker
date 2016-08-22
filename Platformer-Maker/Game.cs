@@ -2,18 +2,17 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Platformer_Maker.Audio;
-using Platformer_Maker.Files;
 using Platformer_Maker.G2D;
 using Platformer_Maker.Input;
-using System;
-using System.Threading;
 
 namespace Platformer_Maker
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
-    public class Game : Microsoft.Xna.Framework.Game
+	//todo implement ScreenManager http://www.dreamincode.net/forums/topic/276045-simple-screen-management-in-xna/
+
+	/// <summary>
+	/// This is the main type for your game.
+	/// </summary>
+	public class Game : Microsoft.Xna.Framework.Game
     {
         private GraphicsDeviceManager graphics;
 		private SpriteBatch spriteBatch;
@@ -95,8 +94,9 @@ namespace Platformer_Maker
 
             //nearest neighboor scaling
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+			
 
-            spriteBatch.End();
+			spriteBatch.End();
 
             base.Draw(gameTime);
         }
