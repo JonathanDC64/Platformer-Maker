@@ -2,8 +2,11 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Platformer_Maker.Audio;
+using Platformer_Maker.Files;
 using Platformer_Maker.G2D;
+using Platformer_Maker.GameObjects;
 using Platformer_Maker.Input;
+using System;
 
 namespace Platformer_Maker
 {
@@ -18,11 +21,13 @@ namespace Platformer_Maker
 		private SpriteBatch spriteBatch;
 		private AudioManager audioManager;
 		private InputManager inputManager;
+		AnimatedSprite a;
 
-        public Game()
+		public Game()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+			IsFixedTimeStep = false;
 		}
 
         /// <summary>
@@ -36,6 +41,13 @@ namespace Platformer_Maker
 			// TODO: Add your initialization logic here
 			audioManager = new AudioManager();
 			inputManager = new InputManager();
+			Tileset t = new Tileset(Content.Load<Texture2D>("Graphics/mario"),14, 1, 32);
+			a = new AnimatedSprite(new Texture2D[] {
+				t.GetTile(1),
+				t.GetTile(2),
+				t.GetTile(3),
+			}, new Rectangle(0,0, 32, 32), new Vector2(16,16), 5);
+			a.Y = Window.ClientBounds.Height - 16;
 			base.Initialize();
         }
 
@@ -63,6 +75,8 @@ namespace Platformer_Maker
 			Content.Unload();
         }
 
+
+		bool t = true;
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -77,7 +91,12 @@ namespace Platformer_Maker
 
 				// TODO: Add your update logic here
 				inputManager.Update();
-
+				double delta = gameTime.ElapsedGameTime.TotalSeconds;
+				a.X += (int)((t ? 150.0 : -150.0) * gameTime.ElapsedGameTime.TotalSeconds);
+				if (a.X > Window.ClientBounds.Width)
+					t = false;
+				if (a.X < 0)
+					t = true;
                 base.Update(gameTime);
             }
         }
@@ -88,14 +107,14 @@ namespace Platformer_Maker
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.HotPink);
+            GraphicsDevice.Clear(Color.CornflowerBlue);
             //this.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
             // TODO: Add your drawing code here
 
             //nearest neighboor scaling
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-			
 
+			DrawAnimatedSprite(a);
 			spriteBatch.End();
 
             base.Draw(gameTime);
@@ -105,5 +124,12 @@ namespace Platformer_Maker
         {
             spriteBatch.Draw(sprite.Texture, sprite.Rect, null, Color.White, sprite.Rotation, sprite.Center, SpriteEffects.None, 0);
         }
-    }
+
+		private void DrawAnimatedSprite(AnimatedSprite sprite)
+		{
+			sprite.Animate();
+			spriteBatch.Draw(sprite.CurrentFrame, sprite.Rect, null, Color.White, sprite.Rotation, sprite.Center, SpriteEffects.None, 0);
+		}
+
+	}
 }
