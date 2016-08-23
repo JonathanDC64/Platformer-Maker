@@ -3,23 +3,37 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Platformer_Maker.G2D
 {
-    class Sprite
+    public class Sprite
     {
         public Sprite(Texture2D texture, Rectangle rect, Vector2 origin, float rotation)
         {
-            Texture = texture;
+            Textures = new Texture2D[] { texture };
             Rect = rect;
             Center = origin;
             Rotation = rotation;
+
         }
 
-        public Sprite(Texture2D texture, Rectangle rect) : this(texture, rect, Vector2.Zero, 0.0f) {   }
+		public Sprite() : this(null, Rectangle.Empty, Vector2.Zero, 0) { }
+
+		public Sprite(Texture2D texture, Rectangle rect) : this(texture, rect, Vector2.Zero, 0.0f) {   }
 
         public Sprite(Texture2D texture, Vector2 position, Vector2 bounds) : this(texture, new Rectangle((int)position.X, (int)position.Y, (int)bounds.X, (int)bounds.Y)){  }
 
-        public Sprite(Sprite sprite) : this(sprite.Texture, sprite.Rect, sprite.Center, sprite.Rotation) {  }
+        public Sprite(Sprite sprite) : this(sprite.Textures[0], sprite.Rect, sprite.Center, sprite.Rotation) {  }
 
-        public Texture2D Texture { get; set; }
+		/// <summary>
+		/// First texture
+		/// </summary>
+		public Texture2D Texture
+		{
+			get
+			{
+				return Textures[0];
+			}
+		}
+
+        protected Texture2D[] Textures { get; set; }
 
         public int X
         {
@@ -134,12 +148,12 @@ namespace Platformer_Maker.G2D
 
         public void SetCenterX(float x)
         {
-            center.X = x * Texture.Width;
+            center.X = x * Textures[0].Width;
         }
 
         public void SetCenterY(float y)
         {
-            center.Y = y * Texture.Height;
+            center.Y = y * Textures[0].Height;
         }
 
         public void SetCenter(float x, float y)
