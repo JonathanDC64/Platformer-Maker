@@ -42,6 +42,9 @@
     <Compile Include="Audio\Sound.cs" />
     <Compile Include="Audio\Sounds.cs" />
     <Compile Include="Files\FileManager.cs" />
+    <Compile Include="G2D\AnimatedSprite.cs" />
+    <Compile Include="GameObjects\GameObject.cs" />
+    <Compile Include="GameObjects\GameObjectProperties.cs" />
     <Compile Include="Input\InputConfig.cs" />
     <Compile Include="Input\InputManager.cs" />
     <Compile Include="Screens\GameScreen.cs" />
