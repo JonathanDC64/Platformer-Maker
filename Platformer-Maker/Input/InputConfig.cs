@@ -14,6 +14,8 @@ namespace Platformer_Maker.Input
 		public Keys Down	= Keys.Down;
 
 		public Keys Left	= Keys.Left;
-		public Keys Right	= Keys.Right;	
+		public Keys Right	= Keys.Right;
+
+		public Keys Pause	= Keys.Enter;
 	}
 }

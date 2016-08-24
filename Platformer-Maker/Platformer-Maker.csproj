@@ -43,11 +43,17 @@
     <Compile Include="Audio\Sounds.cs" />
     <Compile Include="Files\FileManager.cs" />
     <Compile Include="G2D\AnimatedSprite.cs" />
+    <Compile Include="G2D\Entity.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="GameObjects\GameObjectProperties.cs" />
+    <Compile Include="Input\KeyNames.cs" />
     <Compile Include="Input\InputConfig.cs" />
     <Compile Include="Input\InputManager.cs" />
+    <Compile Include="Models\Level.cs" />
+    <Compile Include="Models\Tileset.cs" />
     <Compile Include="Screens\GameScreen.cs" />
+    <Compile Include="Screens\LevelScreen.cs" />
+    <Compile Include="Screens\TestScreen.cs" />
     <Compile Include="TileData\Decoration.cs" />
     <Compile Include="TileData\LevelObject.cs" />
     <Compile Include="G2D\Sprite.cs" />

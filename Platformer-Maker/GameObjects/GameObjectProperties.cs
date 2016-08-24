@@ -15,5 +15,21 @@
 		/// Wether the gameobject is collideable with other Game Objects
 		/// </summary>
 		public bool Collisions;
+
+		/// <summary>
+		/// Wether to Draw the game object or not
+		/// </summary>
+		public bool Visible;
+
+		public GameObjectProperties Clone()
+		{
+			return new GameObjectProperties()
+			{
+				Name = this.Name,
+				ID = this.ID,
+				Collisions = this.Collisions,
+				Visible = this.Visible
+			};
+		}
 	}
 }
