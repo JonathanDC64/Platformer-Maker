@@ -1,5 +1,8 @@
 ﻿using System.Web.Script.Serialization;
 using System.IO;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
+
 namespace Platformer_Maker.Files
 {
 	public class FileManager
@@ -7,14 +10,14 @@ namespace Platformer_Maker.Files
 		public static string CurrentDirectory = Directory.GetCurrentDirectory();
 		public static void WriteObjectFile<T>(T obj, string filename)
 		{
-			string JSON = new JavaScriptSerializer().Serialize(obj);
+			string JSON = JsonConvert.SerializeObject(obj);
 			File.WriteAllText(CurrentDirectory + "/" + filename, JSON);
 		}
 
 		public static T ReadObjectFile<T>(string filename)
 		{
 			string text = File.ReadAllText(CurrentDirectory + "/" + filename);
-			T obj = (T)(new JavaScriptSerializer().Deserialize(text, typeof(T)));
+			T obj = JsonConvert.DeserializeObject<T>(text);
 			return obj;
 		}
 

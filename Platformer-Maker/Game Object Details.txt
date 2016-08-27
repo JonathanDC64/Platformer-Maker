@@ -1,0 +1,23 @@
+
+//A screen contains 24 (Width) by 14(Height) = 336 Tiles
+
+//These are the grid coordinates to which the game will use to get tile texture data from a tileset image
+//-------------------------------------------------------------------------------------------------------
+//Format: Tile name (x1, y1) (x2, y2) //The 2 coordinates form a rectangle
+
+//Regular blocks
+Stone1 		(0,0) (0,0)
+Stone2		(0,1) (0,1)
+Ground1 	(1,0) (1,0)
+Ground2		(1,1) (1,1)
+
+//Interactive Blocks
+Brick		(2,0) (2,0)
+ItemBlock 	(3,0) (3,0)
+
+//Transportation
+Pipe		(4,0) (5,1)
+Door		(6,0) (6,1)
+
+//Hazard
+Spike		(7,0) (7,0)

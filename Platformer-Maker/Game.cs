@@ -7,6 +7,7 @@ using Platformer_Maker.Files;
 using Platformer_Maker.G2D;
 using Platformer_Maker.GameObjects;
 using Platformer_Maker.Input;
+using Platformer_Maker.Models;
 using Platformer_Maker.Screens;
 using System;
 using System.Collections.Generic;
@@ -30,9 +31,10 @@ namespace Platformer_Maker
         public static Dictionary<string, SpriteFont> fonts;
 		public static List<GameScreen> screens;
 		public static ContentManager contentManager;
+		public static Game thisGame;
 
-
-		AnimatedSprite a;
+		private const int MIN_WINDOW_WIDTH = 800;
+		private const int MIN_WINDOW_HEIGHT = 480;
 
 		public Game()
         {
@@ -40,15 +42,35 @@ namespace Platformer_Maker
             Content.RootDirectory = "Content";
 			IsFixedTimeStep = false;
 			Window.AllowUserResizing = true;
+			Window.ClientSizeChanged += Window_ClientSizeChanged;
 		}
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
-        protected override void Initialize()
+		private void Window_ClientSizeChanged(object sender, EventArgs e)
+		{
+			if (Window.ClientBounds.Width < MIN_WINDOW_WIDTH)
+			{
+				graphics.PreferredBackBufferWidth = MIN_WINDOW_WIDTH;
+				graphics.ApplyChanges();
+			}
+			if (Window.ClientBounds.Height < MIN_WINDOW_HEIGHT)
+			{
+				graphics.PreferredBackBufferHeight = MIN_WINDOW_HEIGHT;
+				graphics.ApplyChanges();
+			}
+			Metrics.WindowWidth = Window.ClientBounds.Width;
+			Metrics.WindowHeight = Window.ClientBounds.Height;
+			Metrics.TileWidth = ((float)Metrics.WindowWidth / (float)Metrics.TILE_SCREEN_WIDTH);
+			Metrics.TileHeight = ((float)Metrics.WindowHeight / (float)Metrics.TILE_SCREEN_HEIGHT);
+		}
+
+		Texture2D tile;
+		/// <summary>
+		/// Allows the game to perform any initialization it needs to before starting to run.
+		/// This is where it can query for any required services and load any non-graphic
+		/// related content.  Calling base.Initialize will enumerate through any components
+		/// and initialize them as well.
+		/// </summary>
+		protected override void Initialize()
         {
 			// TODO: Add your initialization logic here
 			audioManager	= new AudioManager();
@@ -57,16 +79,11 @@ namespace Platformer_Maker
 			fonts			= new Dictionary<string, SpriteFont>();
 			screens			= new List<GameScreen>();
 			contentManager = Content;
+			thisGame = this;
 
-			AddScreen(new TestScreen());
-
-			Tileset t = new Tileset(Content.Load<Texture2D>("Graphics/mario"),14, 1, 32);
-			a = new AnimatedSprite(new Texture2D[] {
-				t.GetTile(1),
-				t.GetTile(2),
-				t.GetTile(3),
-			}, new Rectangle(0,0, 32, 32), new Vector2(16,16), 5);
-			
+			AddScreen(new LevelScreen(FileManager.ReadObjectFile<Level>("level1.lvl")));
+			G2D.Tileset t = new G2D.Tileset(FileManager.ReadObjectFile<Models.Tileset>("tileset1.tileset"));
+			tile = t.GetTile(GameObjectID.Stone2)[0];
 			base.Initialize();
         }
 
@@ -99,7 +116,6 @@ namespace Platformer_Maker
 			Content.Unload();
         }
 
-		bool t = true;
         /// <summary>
         /// Allows the game to run logic such as updating the world,
         /// checking for collisions, gathering input, and playing audio.
@@ -125,14 +141,6 @@ namespace Platformer_Maker
 					screens[i].Update(gameTime);
 				}
 			}
-
-			double delta = gameTime.ElapsedGameTime.TotalSeconds;
-			a.X += (int)((t ? 150.0 : -150.0) * gameTime.ElapsedGameTime.TotalSeconds);
-			a.Y = Window.ClientBounds.Height - 16;
-			if (a.X > Window.ClientBounds.Width)
-				t = false;
-			if (a.X < 0)
-				t = true;
             base.Update(gameTime);
         }
 
@@ -145,7 +153,9 @@ namespace Platformer_Maker
 			//GraphicsDevice.Clear(Color.CornflowerBlue);
 			//this.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
 			// TODO: Add your drawing code here
-
+			//nearest neighboor scaling
+			spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+			spriteBatch.Draw(tile, new Rectangle(0, 0, 32, 32), Color.White);
 			var startIndex = screens.Count - 1;
 			while (screens[startIndex].IsPopup)
 			{
@@ -159,11 +169,6 @@ namespace Platformer_Maker
 			{
 				screens[i].Draw(gameTime, spriteBatch);
 			}
-
-
-			//nearest neighboor scaling
-			spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-			DrawAnimatedSprite(a);
 			spriteBatch.End();
 
             base.Draw(gameTime);

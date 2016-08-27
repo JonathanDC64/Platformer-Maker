@@ -44,26 +44,31 @@
     <Compile Include="Files\FileManager.cs" />
     <Compile Include="G2D\AnimatedSprite.cs" />
     <Compile Include="G2D\Entity.cs" />
+    <Compile Include="G2D\Metrics.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
+    <Compile Include="GameObjects\GameObjectFactory.cs" />
+    <Compile Include="GameObjects\GameObjectID.cs" />
     <Compile Include="GameObjects\GameObjectProperties.cs" />
     <Compile Include="Input\KeyNames.cs" />
     <Compile Include="Input\InputConfig.cs" />
     <Compile Include="Input\InputManager.cs" />
     <Compile Include="Models\Level.cs" />
+    <Compile Include="Models\TileInfo.cs" />
     <Compile Include="Models\Tileset.cs" />
     <Compile Include="Screens\GameScreen.cs" />
     <Compile Include="Screens\LevelScreen.cs" />
     <Compile Include="Screens\TestScreen.cs" />
-    <Compile Include="TileData\Decoration.cs" />
-    <Compile Include="TileData\LevelObject.cs" />
     <Compile Include="G2D\Sprite.cs" />
     <Compile Include="G2D\Tileset.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TileData\TileInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>lib\Json.Net\Bin\Portable40\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="OpenTK">
       <HintPath>$(MonoGameInstallDirectory)\MonoGame\v3.0\Assemblies\DesktopGL\OpenTK.dll</HintPath>
     </Reference>

@@ -11,9 +11,20 @@ namespace Platformer_Maker.GameObjects
 	/// A GameObject for levels
 	/// Can be a block, an enemie, etc..
 	/// </summary>
-	/// <typeparam name="StateEnum">The generic type T represents the Enum used for the objects state</typeparam>
-	public abstract class GameObject<StateEnum> : Entity
+	/// <typeparam name="StateEnum">The generic type represents the Enum used for the objects state</typeparam>
+	public abstract class GameObject : Entity
 	{
+		public enum State
+		{
+			Normal,
+			Hit,
+			MovingLeft,
+			MovingRight,
+			Still,
+			Jumping,
+			Dying
+		}
+
 		/// <summary>
 		/// Information on the game object
 		/// (Id, Name, etc).
@@ -26,15 +37,15 @@ namespace Platformer_Maker.GameObjects
 		/// a game object state. Should be initialized
 		/// in the Initialize Function
 		/// </summary>
-		public Dictionary<StateEnum, AnimatedSprite> Sprites { get; set; }
+		public Dictionary<State, AnimatedSprite> Sprites { get; set; }
 
-		public StateEnum State { get; }
+		public State CurrentState { get; }
 
 		public AnimatedSprite CurrentSprite
 		{
 			get
 			{
-				return Sprites[State];
+				return Sprites[CurrentState];
 			}
 		}
 		

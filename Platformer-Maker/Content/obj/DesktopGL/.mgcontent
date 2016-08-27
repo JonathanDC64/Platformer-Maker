@@ -8,5 +8,7 @@
     <File>D:/Platformer-Maker/Platformer-Maker/Content/Audio/SFX/Coin.wav</File>
     <File>D:/Platformer-Maker/Platformer-Maker/Content/Graphics/Mushroom.png</File>
     <File>D:/Platformer-Maker/Platformer-Maker/Content/Graphics/Mario.png</File>
+    <File>D:/Platformer-Maker/Platformer-Maker/Content/Graphics/ground.png</File>
+    <File>D:/Platformer-Maker/Platformer-Maker/Content/Graphics/tileset.png</File>
   </SourceFiles>
 </SourceFileCollection>
