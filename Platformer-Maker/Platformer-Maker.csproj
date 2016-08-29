@@ -49,6 +49,8 @@
     <Compile Include="GameObjects\GameObjectFactory.cs" />
     <Compile Include="GameObjects\GameObjectID.cs" />
     <Compile Include="GameObjects\GameObjectProperties.cs" />
+    <Compile Include="GameObjects\Block.cs" />
+    <Compile Include="GameObjects\Empty.cs" />
     <Compile Include="Input\KeyNames.cs" />
     <Compile Include="Input\InputConfig.cs" />
     <Compile Include="Input\InputManager.cs" />

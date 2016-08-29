@@ -14,7 +14,7 @@ namespace Platformer_Maker.Models
 		/// and in a 2d grid (2d array) used to know
 		/// how to shape the level
 		/// </summary>
-		public int[,] LevelData;
+		public GameObjectID[,] LevelData;
 
 		public Level Clone()
 		{
@@ -24,7 +24,7 @@ namespace Platformer_Maker.Models
 				Author = this.Author,
 				Name = this.Name,
 				TimeLimit = this.TimeLimit,
-				LevelData = (int[,])this.LevelData.Clone()
+				LevelData = (GameObjectID[,])this.LevelData.Clone()
 			};
 		}
 	}

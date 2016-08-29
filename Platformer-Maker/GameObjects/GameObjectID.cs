@@ -4,22 +4,23 @@
 	{
 		Empty = 0,
 		//regular Blocks That Only Have Collision//
-		Ground1 = 1,
-		Ground2 = 2,
-		Stone1 = 3,
-		Stone2 = 4,
+		Ground1,
+		Ground2,
+		Stone1,
+		Stone2,
 
 		//regular Blocks With Interaction//
-		Brick = 5,
-		ItemBlock = 6,
-		Hidden = 7,
+		Brick1,
+		Brick2,
+		ItemBlock,
+		Hidden,
 
 		//transportation Objects//
-		Pipe = 8,
-		Door = 9,
+		Pipe,
+		Door,
 
 		//hazards//
-		Spike = 10,
+		Spike,
 
 		//moving Objects//
 		SemiSolidPlatform,

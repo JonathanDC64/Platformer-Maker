@@ -18,6 +18,11 @@
 		public static readonly int TILE_SCREEN_HEIGHT = 14;
 
 		/// <summary>
+		/// Default animation delay
+		/// </summary>
+		public static readonly int ANIMATION_DELAY = 10;
+
+		/// <summary>
 		/// Width of the game window
 		/// can vary
 		/// </summary>

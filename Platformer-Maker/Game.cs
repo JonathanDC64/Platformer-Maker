@@ -27,20 +27,21 @@ namespace Platformer_Maker
 		public static SpriteBatch spriteBatch;
 		public static AudioManager audioManager;
 		public static InputManager inputManager;
-		public static Dictionary<string, Texture2D> textures2D;
+		public static Dictionary<string, Texture2D[]> textures2D;
         public static Dictionary<string, SpriteFont> fonts;
 		public static List<GameScreen> screens;
 		public static ContentManager contentManager;
-		public static Game thisGame;
+		public static G2D.Tileset currentTileset;
+
 
 		private const int MIN_WINDOW_WIDTH = 800;
 		private const int MIN_WINDOW_HEIGHT = 480;
+		private const string DEFAULT_TILESET_FILE = "tileset1.tileset";
 
 		public Game()
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-			IsFixedTimeStep = false;
 			Window.AllowUserResizing = true;
 			Window.ClientSizeChanged += Window_ClientSizeChanged;
 		}
@@ -57,13 +58,18 @@ namespace Platformer_Maker
 				graphics.PreferredBackBufferHeight = MIN_WINDOW_HEIGHT;
 				graphics.ApplyChanges();
 			}
+			
+			UpdateMetrics(Window);
+		}
+
+		private static void UpdateMetrics(GameWindow Window)
+		{
 			Metrics.WindowWidth = Window.ClientBounds.Width;
 			Metrics.WindowHeight = Window.ClientBounds.Height;
 			Metrics.TileWidth = ((float)Metrics.WindowWidth / (float)Metrics.TILE_SCREEN_WIDTH);
 			Metrics.TileHeight = ((float)Metrics.WindowHeight / (float)Metrics.TILE_SCREEN_HEIGHT);
 		}
 
-		Texture2D tile;
 		/// <summary>
 		/// Allows the game to perform any initialization it needs to before starting to run.
 		/// This is where it can query for any required services and load any non-graphic
@@ -75,17 +81,33 @@ namespace Platformer_Maker
 			// TODO: Add your initialization logic here
 			audioManager	= new AudioManager();
 			inputManager	= new InputManager();
-			textures2D		= new Dictionary<string, Texture2D>();
+			textures2D		= new Dictionary<string, Texture2D[]>();
 			fonts			= new Dictionary<string, SpriteFont>();
 			screens			= new List<GameScreen>();
 			contentManager = Content;
-			thisGame = this;
 
+			UpdateMetrics(Window);
+
+			currentTileset = new G2D.Tileset(FileManager.ReadObjectFile<Models.Tileset>(DEFAULT_TILESET_FILE));
+			LoadTextures();
 			AddScreen(new LevelScreen(FileManager.ReadObjectFile<Level>("level1.lvl")));
-			G2D.Tileset t = new G2D.Tileset(FileManager.ReadObjectFile<Models.Tileset>("tileset1.tileset"));
-			tile = t.GetTile(GameObjectID.Stone2)[0];
 			base.Initialize();
         }
+
+		private static void LoadTextures()
+		{
+			foreach(GameObjectID id in Enum.GetValues(typeof(GameObjectID)))
+			{
+				try
+				{
+					textures2D[id.ToString()] = currentTileset.GetTile(id);
+				}
+				catch(Exception e)
+				{
+					Console.WriteLine("ERROR: " + e.Message);
+				}
+			}
+		}
 
         /// <summary>
         /// LoadContent will be called once per game and is the place to load
@@ -155,7 +177,6 @@ namespace Platformer_Maker
 			// TODO: Add your drawing code here
 			//nearest neighboor scaling
 			spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-			spriteBatch.Draw(tile, new Rectangle(0, 0, 32, 32), Color.White);
 			var startIndex = screens.Count - 1;
 			while (screens[startIndex].IsPopup)
 			{
@@ -194,7 +215,7 @@ namespace Platformer_Maker
 		{
 			if (!textures2D.ContainsKey(textureName))
 			{
-				textures2D.Add(textureName, contentManager.Load<Texture2D>(textureName));
+				textures2D.Add(textureName, new Texture2D[] { contentManager.Load<Texture2D>(textureName) });
 			}
 		}
 

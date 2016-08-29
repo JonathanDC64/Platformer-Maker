@@ -9,7 +9,7 @@
 
 
 		public string Name;
-		public int ID;
+		public GameObjectID ID;
 
 		/// <summary>
 		/// Wether the gameobject is collideable with other Game Objects

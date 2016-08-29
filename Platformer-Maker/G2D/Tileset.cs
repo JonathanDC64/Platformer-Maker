@@ -6,13 +6,13 @@ using System.Collections.Generic;
 
 namespace Platformer_Maker.G2D
 {
-    class Tileset
+    public class Tileset
     {
         public Tileset(Models.Tileset tilesetData)
         {
 			TilesetData = tilesetData;
 			Game.AddTexture2D(TilesetData.FileName);
-			TilesetTexture = Game.textures2D[TilesetData.FileName];
+			TilesetTexture = Game.textures2D[TilesetData.FileName][0];
 		}
 		
 		public Models.Tileset TilesetData { get; set; }

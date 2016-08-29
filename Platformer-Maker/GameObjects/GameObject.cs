@@ -30,7 +30,7 @@ namespace Platformer_Maker.GameObjects
 		/// (Id, Name, etc).
 		/// Used in serialization.
 		/// </summary>
-		public GameObjectProperties Properties { get; set; }
+		public GameObjectProperties Properties { get; private set; }
 
 		/// <summary>
 		/// Dictionary of animations associated with
@@ -39,7 +39,7 @@ namespace Platformer_Maker.GameObjects
 		/// </summary>
 		public Dictionary<State, AnimatedSprite> Sprites { get; set; }
 
-		public State CurrentState { get; }
+		public State CurrentState { get; protected set; }
 
 		public AnimatedSprite CurrentSprite
 		{
@@ -48,7 +48,7 @@ namespace Platformer_Maker.GameObjects
 				return Sprites[CurrentState];
 			}
 		}
-		
+
 		/// <summary>
 		/// Creates a Game Object
 		/// </summary>
@@ -60,6 +60,9 @@ namespace Platformer_Maker.GameObjects
 		public GameObject(GameObjectProperties properties)
 		{
 			Properties = properties;
+			Sprites = new Dictionary<State, AnimatedSprite>();
+			CurrentState = State.Normal;
+			Initialize();
 		}
 
 		/// <summary>
@@ -76,11 +79,24 @@ namespace Platformer_Maker.GameObjects
 		public abstract void Update(GameTime gameTime);
 
 
-		protected void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+		public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 position)
 		{
-			CurrentSprite.Animate();
 			if(Properties.Visible)
-				spriteBatch.Draw(CurrentSprite.CurrentFrame, CurrentSprite.Rect, null, Color.White, CurrentSprite.Rotation, CurrentSprite.Center, SpriteEffects.None, 0);
+			{
+				Vector2 scale = new Vector2(Metrics.TileWidth / (float)CurrentSprite.CurrentFrame.Width, Metrics.TileHeight / (float)CurrentSprite.CurrentFrame.Height);
+				CurrentSprite.Animate();
+				spriteBatch.Draw(CurrentSprite.CurrentFrame, position, null, Color.White, CurrentSprite.Rotation, CurrentSprite.Center, scale, SpriteEffects.None, 0.0f);
+			}
+		}
+
+		public static string idToString(GameObjectID id)
+		{
+			return id.ToString();
+		}
+
+		protected AnimatedSprite GenerateAnimatedSprite(GameObjectID id)
+		{
+			return new AnimatedSprite(Game.textures2D[id.ToString()], new Rectangle(0, 0, 1, 1), Vector2.Zero, Metrics.ANIMATION_DELAY);
 		}
 	}
 }
