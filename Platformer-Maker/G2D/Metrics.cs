@@ -23,37 +23,14 @@
 		public static readonly int ANIMATION_DELAY = 10;
 
 		/// <summary>
-		/// Width of the game window
-		/// can vary
+		/// Global physics gravity
 		/// </summary>
-		public static int WindowWidth;
+		public static readonly float GRAVITY = 9.82f;
 
-		/// <summary>
-		/// Height of the game window
-		/// can vary
-		/// </summary>
-		public static int WindowHeight;
+		public static readonly float RENDER_WIDTH  = 1280.0f;
+		public static readonly float RENDER_HEIGHT = 720.0f;
 
-		/// <summary>
-		/// Width of a single tile.
-		/// Depends on the window size
-		/// </summary>
-		public static float TileWidth;
-
-		/// <summary>
-		/// Height of a single tile.
-		/// Depends on the window size
-		/// </summary>
-		public static float TileHeight;
-
-		/// <summary>
-		/// Used to scale tiles when the windows width changes
-		/// </summary>
-		public static float ScaleX;
-
-		/// <summary>
-		/// Used to scale tiles when the windows height changes
-		/// </summary>
-		public static float ScaleY;
+		public static readonly float TILE_WIDTH	 = RENDER_WIDTH  / (float)TILE_SCREEN_WIDTH;
+		public static readonly float TILE_HEIGHT = RENDER_HEIGHT / (float)TILE_SCREEN_HEIGHT;
 	}
 }

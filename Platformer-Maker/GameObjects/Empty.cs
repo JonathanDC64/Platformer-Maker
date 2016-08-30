@@ -6,7 +6,7 @@ namespace Platformer_Maker.GameObjects
 	class Empty : GameObject
 	{
 		public Empty() 
-			: base(new GameObjectProperties() { ID = GameObjectID.Empty, Collisions = false, Name = GameObjectID.Empty.ToString(), Visible = false})
+			: base(new GameObjectProperties() { ID = GameObjectID.Empty, Collisions = false, Name = GameObjectID.Empty.ToString(), Visible = false, GameObjectShape = GameObjectProperties.Shape.None})
 		{}
 		public override void Initialize(){}
 

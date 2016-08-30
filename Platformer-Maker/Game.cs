@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using FarseerPhysics;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -34,41 +35,18 @@ namespace Platformer_Maker
 		public static G2D.Tileset currentTileset;
 
 
-		private const int MIN_WINDOW_WIDTH = 800;
-		private const int MIN_WINDOW_HEIGHT = 480;
+		public static SpriteBatch targetBatch;
+		public static RenderTarget2D target;
+
 		private const string DEFAULT_TILESET_FILE = "tileset1.tileset";
 
 		public Game()
         {
             graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
+			Content.RootDirectory = "Content";
 			Window.AllowUserResizing = true;
-			Window.ClientSizeChanged += Window_ClientSizeChanged;
 		}
 
-		private void Window_ClientSizeChanged(object sender, EventArgs e)
-		{
-			if (Window.ClientBounds.Width < MIN_WINDOW_WIDTH)
-			{
-				graphics.PreferredBackBufferWidth = MIN_WINDOW_WIDTH;
-				graphics.ApplyChanges();
-			}
-			if (Window.ClientBounds.Height < MIN_WINDOW_HEIGHT)
-			{
-				graphics.PreferredBackBufferHeight = MIN_WINDOW_HEIGHT;
-				graphics.ApplyChanges();
-			}
-			
-			UpdateMetrics(Window);
-		}
-
-		private static void UpdateMetrics(GameWindow Window)
-		{
-			Metrics.WindowWidth = Window.ClientBounds.Width;
-			Metrics.WindowHeight = Window.ClientBounds.Height;
-			Metrics.TileWidth = ((float)Metrics.WindowWidth / (float)Metrics.TILE_SCREEN_WIDTH);
-			Metrics.TileHeight = ((float)Metrics.WindowHeight / (float)Metrics.TILE_SCREEN_HEIGHT);
-		}
 
 		/// <summary>
 		/// Allows the game to perform any initialization it needs to before starting to run.
@@ -86,15 +64,17 @@ namespace Platformer_Maker
 			screens			= new List<GameScreen>();
 			contentManager = Content;
 
-			UpdateMetrics(Window);
-
+			targetBatch = new SpriteBatch(GraphicsDevice);
+			target = new RenderTarget2D(GraphicsDevice, (int)Metrics.RENDER_WIDTH, (int)Metrics.RENDER_HEIGHT);
+			ConvertUnits.SetDisplayUnitToSimUnitRatio(Metrics.TILE_WIDTH);
 			currentTileset = new G2D.Tileset(FileManager.ReadObjectFile<Models.Tileset>(DEFAULT_TILESET_FILE));
-			LoadTextures();
+			LoadTileset();
 			AddScreen(new LevelScreen(FileManager.ReadObjectFile<Level>("level1.lvl")));
+			
 			base.Initialize();
         }
 
-		private static void LoadTextures()
+		private static void LoadTileset()
 		{
 			foreach(GameObjectID id in Enum.GetValues(typeof(GameObjectID)))
 			{
@@ -147,7 +127,7 @@ namespace Platformer_Maker
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
+			
 			// TODO: Add your update logic here
 			inputManager.Update();
 
@@ -172,9 +152,7 @@ namespace Platformer_Maker
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-			//GraphicsDevice.Clear(Color.CornflowerBlue);
-			//this.GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;
-			// TODO: Add your drawing code here
+			GraphicsDevice.SetRenderTarget(target);
 			//nearest neighboor scaling
 			spriteBatch.Begin(samplerState: SamplerState.PointClamp);
 			var startIndex = screens.Count - 1;
@@ -192,7 +170,15 @@ namespace Platformer_Maker
 			}
 			spriteBatch.End();
 
-            base.Draw(gameTime);
+			//set rendering back to the back buffer
+			GraphicsDevice.SetRenderTarget(null);
+
+			//render target to back buffer
+			targetBatch.Begin();
+			targetBatch.Draw(target, new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height), Color.White);
+			targetBatch.End();
+
+			base.Draw(gameTime);
         }
 
 		public static void AddFont(string fontName)
@@ -249,17 +235,5 @@ namespace Platformer_Maker
 			RemoveScreen(currentScreen);
 			AddScreen(targetScreen);
 		}
-
-		private void DrawSprite(Sprite sprite)
-        {
-            spriteBatch.Draw(sprite.Texture, sprite.Rect, null, Color.White, sprite.Rotation, sprite.Center, SpriteEffects.None, 0);
-        }
-
-		private void DrawAnimatedSprite(AnimatedSprite sprite)
-		{
-			sprite.Animate();
-			spriteBatch.Draw(sprite.CurrentFrame, sprite.Rect, null, Color.White, sprite.Rotation, sprite.Center, SpriteEffects.None, 0);
-		}
-
 	}
 }

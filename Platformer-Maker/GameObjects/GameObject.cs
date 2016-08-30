@@ -1,4 +1,7 @@
 ﻿
+using FarseerPhysics;
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Factories;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Platformer_Maker.G2D;
@@ -41,6 +44,8 @@ namespace Platformer_Maker.GameObjects
 
 		public State CurrentState { get; protected set; }
 
+		public Body PhysicsBody { get; private set; }
+
 		public AnimatedSprite CurrentSprite
 		{
 			get
@@ -62,6 +67,9 @@ namespace Platformer_Maker.GameObjects
 			Properties = properties;
 			Sprites = new Dictionary<State, AnimatedSprite>();
 			CurrentState = State.Normal;
+			scale = new Vector2();
+			Width = Properties.Width;
+			Height = Properties.Height;
 			Initialize();
 		}
 
@@ -78,16 +86,77 @@ namespace Platformer_Maker.GameObjects
 		/// <param name="gameTime"></param>
 		public abstract void Update(GameTime gameTime);
 
-
+		private Vector2 scale;
 		public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 position)
 		{
 			if(Properties.Visible)
 			{
-				Vector2 scale = new Vector2(Metrics.TileWidth / (float)CurrentSprite.CurrentFrame.Width, Metrics.TileHeight / (float)CurrentSprite.CurrentFrame.Height);
+				scale.X = Metrics.TILE_WIDTH / (float)CurrentSprite.CurrentFrame.Width;
+				scale.Y = Metrics.TILE_HEIGHT / (float)CurrentSprite.CurrentFrame.Height;
 				CurrentSprite.Animate();
-				spriteBatch.Draw(CurrentSprite.CurrentFrame, position, null, Color.White, CurrentSprite.Rotation, CurrentSprite.Center, scale, SpriteEffects.None, 0.0f);
+				spriteBatch.Draw(CurrentSprite.CurrentFrame, position, null, Color.White, Rotation, Center, scale, SpriteEffects.None, 0.0f);
 			}
 		}
+
+		public void SetTileX(int x)
+		{
+			X = (int)(Metrics.TILE_WIDTH * (float)x);
+		}
+
+		public void SetTileY(int y)
+		{
+			Y = (int)(Metrics.TILE_HEIGHT * (float)y);
+		}
+
+		public float GetTileX()
+		{
+			return (float)X * Metrics.TILE_WIDTH;
+		}
+
+		public float GetTileY()
+		{
+			return (float)Y * Metrics.TILE_HEIGHT;
+		}
+
+		public float GetTileWidth()
+		{
+			return (float)Width * Metrics.TILE_WIDTH;
+		}
+
+		public float GetTileHeight()
+		{
+			return (float)Height * Metrics.TILE_HEIGHT;
+		}
+
+
+		public void InitializeBody(World world, Vector2 position)
+		{
+			float width = ConvertUnits.ToSimUnits(GetTileWidth());
+			float height = ConvertUnits.ToSimUnits(GetTileHeight());
+			if(Properties.GameObjectShape == GameObjectProperties.Shape.Rectangle)
+				PhysicsBody = BodyFactory.CreateRectangle(world, width, height, 1f, ConvertUnits.ToSimUnits(position));
+			else if (Properties.GameObjectShape == GameObjectProperties.Shape.Circle)
+				PhysicsBody = BodyFactory.CreateCircle(world, height / 2.0f, 1f, ConvertUnits.ToSimUnits(position));
+			else
+				PhysicsBody = null;
+			
+			if (PhysicsBody != null)
+			{
+				if(Properties.Physics)
+				{
+					PhysicsBody.BodyType = BodyType.Dynamic;
+					PhysicsBody.IsStatic = false;
+				}
+				else
+				{
+					PhysicsBody.BodyType = BodyType.Static;
+					PhysicsBody.IsStatic = true;
+				}
+				PhysicsBody.FixedRotation = true;
+				PhysicsBody.Friction = 1.2f;
+			}
+		}
+
 
 		public static string idToString(GameObjectID id)
 		{

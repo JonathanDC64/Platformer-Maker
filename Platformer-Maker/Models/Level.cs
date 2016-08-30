@@ -1,4 +1,5 @@
-﻿using Platformer_Maker.GameObjects;
+﻿using Microsoft.Xna.Framework;
+using Platformer_Maker.GameObjects;
 
 namespace Platformer_Maker.Models
 {
@@ -8,6 +9,7 @@ namespace Platformer_Maker.Models
 		public string Author;
 		public string Name;
 		public int TimeLimit;
+		public Vector2 StartPoint;
 
 		/// <summary>
 		/// Contains ids for all gameobjects in a level

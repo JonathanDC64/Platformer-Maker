@@ -3,6 +3,9 @@
 	public enum GameObjectID
 	{
 		Empty = 0,
+
+		Player,
+
 		//regular Blocks That Only Have Collision//
 		Ground1,
 		Ground2,

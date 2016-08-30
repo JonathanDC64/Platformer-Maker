@@ -1,0 +1,8 @@
+/*
+!.gitignore
+!/bin
+/bin/*
+!/bin/WindowsGL
+/bin/WindowsGL/*
+!/bin/WindowsGL/Debug/
+!/bin/Debug/

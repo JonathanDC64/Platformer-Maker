@@ -52,7 +52,7 @@ namespace Platformer_Maker.Input
 			OldInputs		= Inputs.ToDictionary(entry => entry.Key, entry => entry.Value);
 		}
 
-		public bool KeyPressed(string key)
+		public static bool KeyPressed(string key)
 		{
 			return Inputs[key] && !OldInputs[key];
 		}
