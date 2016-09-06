@@ -1,8 +1,4 @@
-﻿
-using FarseerPhysics;
-using FarseerPhysics.Dynamics;
-using FarseerPhysics.Factories;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Platformer_Maker.G2D;
 using System;
@@ -44,8 +40,6 @@ namespace Platformer_Maker.GameObjects
 
 		public State CurrentState { get; protected set; }
 
-		public Body PhysicsBody { get; private set; }
-
 		public AnimatedSprite CurrentSprite
 		{
 			get
@@ -53,6 +47,9 @@ namespace Platformer_Maker.GameObjects
 				return Sprites[CurrentState];
 			}
 		}
+
+		public float VelocityX { get; set; }
+		public float VelocityY { get; set; }
 
 		/// <summary>
 		/// Creates a Game Object
@@ -68,9 +65,11 @@ namespace Platformer_Maker.GameObjects
 			Sprites = new Dictionary<State, AnimatedSprite>();
 			CurrentState = State.Normal;
 			scale = new Vector2();
+			shadowPosition = new Vector2();
 			Width = Properties.Width;
 			Height = Properties.Height;
-			Initialize();
+			VelocityX = 0f;
+			VelocityY = 0f;
 		}
 
 		/// <summary>
@@ -84,9 +83,30 @@ namespace Platformer_Maker.GameObjects
 		/// update object state here
 		/// </summary>
 		/// <param name="gameTime"></param>
-		public abstract void Update(GameTime gameTime);
+		public virtual void Update(GameTime gameTime)
+		{
+			
+			
+		}
+
+		public void UpdateX(GameTime gameTime)
+		{
+			X += (VelocityX * (float)gameTime.ElapsedGameTime.TotalSeconds);
+		}
+
+		public void UpdateY(GameTime gameTime)
+		{
+			Y += (VelocityY * (float)gameTime.ElapsedGameTime.TotalSeconds);
+		}
+
+		public void ApplyPhysics(GameTime gameTime)
+		{
+			Y += Metrics.GRAVITY * (float)gameTime.ElapsedGameTime.TotalSeconds;
+		}
 
 		private Vector2 scale;
+		private Vector2 shadowPosition;
+		private readonly Color shadow = new Color(0, 0, 0, 100);
 		public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 position)
 		{
 			if(Properties.Visible)
@@ -94,18 +114,31 @@ namespace Platformer_Maker.GameObjects
 				scale.X = Metrics.TILE_WIDTH / (float)CurrentSprite.CurrentFrame.Width;
 				scale.Y = Metrics.TILE_HEIGHT / (float)CurrentSprite.CurrentFrame.Height;
 				CurrentSprite.Animate();
-				spriteBatch.Draw(CurrentSprite.CurrentFrame, position, null, Color.White, Rotation, Center, scale, SpriteEffects.None, 0.0f);
+			
+				//draw gameobject
+				spriteBatch.Draw(CurrentSprite.CurrentFrame, position, null, Color.White, Rotation, Center, scale, SpriteEffects.None, 1.0f);
+			}
+		}
+
+		public void DrawShadow(GameTime gameTime, SpriteBatch spriteBatch, float offsetX, float offsetY)
+		{
+			if (Properties.Visible)
+			{
+				shadowPosition.X = (X + Metrics.TILE_WIDTH  * 0.22222222f) + offsetX;
+				shadowPosition.Y = (Y + Metrics.TILE_HEIGHT * 0.22222222f) + offsetY;
+				//draw shadow
+				spriteBatch.Draw(CurrentSprite.CurrentFrame, shadowPosition, null, shadow, Rotation, Center, scale, SpriteEffects.None, 0.0f);
 			}
 		}
 
 		public void SetTileX(int x)
 		{
-			X = (int)(Metrics.TILE_WIDTH * (float)x);
+			X = (Metrics.TILE_WIDTH * (float)x);
 		}
 
 		public void SetTileY(int y)
 		{
-			Y = (int)(Metrics.TILE_HEIGHT * (float)y);
+			Y = (Metrics.TILE_HEIGHT * (float)y);
 		}
 
 		public float GetTileX()
@@ -128,34 +161,41 @@ namespace Platformer_Maker.GameObjects
 			return (float)Height * Metrics.TILE_HEIGHT;
 		}
 
-
-		public void InitializeBody(World world, Vector2 position)
+		public Rectangle Rect
 		{
-			float width = ConvertUnits.ToSimUnits(GetTileWidth());
-			float height = ConvertUnits.ToSimUnits(GetTileHeight());
-			if(Properties.GameObjectShape == GameObjectProperties.Shape.Rectangle)
-				PhysicsBody = BodyFactory.CreateRectangle(world, width, height, 1f, ConvertUnits.ToSimUnits(position));
-			else if (Properties.GameObjectShape == GameObjectProperties.Shape.Circle)
-				PhysicsBody = BodyFactory.CreateCircle(world, height / 2.0f, 1f, ConvertUnits.ToSimUnits(position));
-			else
-				PhysicsBody = null;
-			
-			if (PhysicsBody != null)
+			get
 			{
-				if(Properties.Physics)
-				{
-					PhysicsBody.BodyType = BodyType.Dynamic;
-					PhysicsBody.IsStatic = false;
-				}
-				else
-				{
-					PhysicsBody.BodyType = BodyType.Static;
-					PhysicsBody.IsStatic = true;
-				}
-				PhysicsBody.FixedRotation = true;
-				PhysicsBody.Friction = 1.2f;
+				return new Rectangle((int)X, (int)Y, (int)GetTileWidth(), (int)GetTileHeight());
 			}
 		}
+
+		//public void InitializeBody(World world, Vector2 position)
+		//{
+		//	float width = ConvertUnits.ToSimUnits(GetTileWidth());
+		//	float height = ConvertUnits.ToSimUnits(GetTileHeight());
+		//	if(Properties.GameObjectShape == GameObjectProperties.Shape.Rectangle)
+		//		PhysicsBody = BodyFactory.CreateRectangle(world, width, height, 1f, ConvertUnits.ToSimUnits(position));
+		//	else if (Properties.GameObjectShape == GameObjectProperties.Shape.Circle)
+		//		PhysicsBody = BodyFactory.CreateCircle(world, height / 2.0f, 1f, ConvertUnits.ToSimUnits(position));
+		//	else
+		//		PhysicsBody = null;
+
+		//	if (PhysicsBody != null)
+		//	{
+		//		if(Properties.Physics)
+		//		{
+		//			PhysicsBody.BodyType = BodyType.Dynamic;
+		//			PhysicsBody.IsStatic = false;
+		//		}
+		//		else
+		//		{
+		//			PhysicsBody.BodyType = BodyType.Static;
+		//			PhysicsBody.IsStatic = true;
+		//		}
+		//		PhysicsBody.FixedRotation = true;
+		//		PhysicsBody.Friction = 1.2f;
+		//	}
+		//}
 
 
 		public static string idToString(GameObjectID id)
@@ -165,7 +205,7 @@ namespace Platformer_Maker.GameObjects
 
 		protected AnimatedSprite GenerateAnimatedSprite(GameObjectID id)
 		{
-			return new AnimatedSprite(Game.textures2D[id.ToString()], new Rectangle(0, 0, 1, 1), Vector2.Zero, Metrics.ANIMATION_DELAY);
+			return new AnimatedSprite(Game.textures2D[id.ToString()], new Vector2(0, 0), new Vector2(0, 0), Vector2.Zero, Metrics.ANIMATION_DELAY);
 		}
 	}
 }

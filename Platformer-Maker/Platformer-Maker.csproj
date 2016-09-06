@@ -41,6 +41,7 @@
     <Compile Include="Audio\AudioManager.cs" />
     <Compile Include="Audio\Sound.cs" />
     <Compile Include="Audio\Sounds.cs" />
+    <Compile Include="Collision\CollisionManager.cs" />
     <Compile Include="Files\FileManager.cs" />
     <Compile Include="G2D\AnimatedSprite.cs" />
     <Compile Include="G2D\Entity.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="Input\KeyNames.cs" />
     <Compile Include="Input\InputConfig.cs" />
     <Compile Include="Input\InputManager.cs" />
+    <Compile Include="LevelData\ActiveLevel.cs" />
     <Compile Include="Models\Level.cs" />
     <Compile Include="Models\TileInfo.cs" />
     <Compile Include="Models\Tileset.cs" />
@@ -68,10 +70,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="FarseerPhysics MonoGame, Version=3.5.0.31962, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>lib\Farseer Physics Engine 3.5\bin\WindowsGL\Debug\FarseerPhysics MonoGame.dll</HintPath>
-    </Reference>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>lib\Json.Net\Bin\Portable40\Newtonsoft.Json.dll</HintPath>

@@ -4,102 +4,102 @@ namespace Platformer_Maker.G2D
 {
 	public class Entity
 	{
-		public int X
+		public float X
 		{
 			get
 			{
-				return rect.X;
+				return position.X;
 			}
 			set
 			{
-				rect.X = value;
+				position.X = value;
 			}
 		}
 
-		public int Y
+		public float Y
 		{
 			get
 			{
-				return rect.Y;
+				return position.Y;
 			}
 			set
 			{
-				rect.Y = value;
+				position.Y = value;
 			}
 		}
 
+		private Vector2 position;
 		public Vector2 Position
 		{
 			get
 			{
-				return new Vector2(X, Y);
+				return position;
 			}
 			set
 			{
-				X = (int)value.X;
-				Y = (int)value.Y;
+				position = value;
 			}
 		}
 
-		public void SetPosition(int x, int y)
+		public void SetPosition(float x, float y)
 		{
 			X = x;
 			Y = y;
 		}
 
-		public void translate(int xAmount, int yAmount)
+		public void translate(float xAmount, float yAmount)
 		{
 			translateX(xAmount);
 			translateY(yAmount);
 		}
 
-		public void translateX(int xAmount)
+		public void translateX(float xAmount)
 		{
 			X += xAmount;
 		}
 
-		public void translateY(int yAmount)
+		public void translateY(float yAmount)
 		{
 			Y += yAmount;
 		}
 
-		public int Width
+		public float Width
 		{
 			get
 			{
-				return rect.Width;
+				return bounds.X;
 			}
 			set
 			{
-				rect.Width = value;
+				bounds.X = value;
 			}
 		}
 
-		public int Height
+		public float Height
 		{
 			get
 			{
-				return rect.Height;
+				return bounds.Y;
 			}
 			set
 			{
-				rect.Height = value;
+				bounds.Y = value;
 			}
 		}
 
-		public Rectangle Rect
+		private Vector2 bounds;
+		public Vector2 Bounds
 		{
 			get
 			{
-				return rect;
+				return bounds;
 			}
+
 			set
 			{
-				rect = value;
+				bounds = value;
 			}
 		}
-
-		private Rectangle rect;
 
 		public Vector2 Center
 		{

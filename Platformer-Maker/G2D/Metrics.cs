@@ -10,27 +10,30 @@
 		/// <summary>
 		/// Number of tiles visible on the screens width
 		/// </summary>
-		public static readonly int TILE_SCREEN_WIDTH = 24;
+		public const int TILE_SCREEN_WIDTH = 24;
 
 		/// <summary>
 		/// Number of tiles visible on the screens height
 		/// </summary>
-		public static readonly int TILE_SCREEN_HEIGHT = 14;
+		public const int TILE_SCREEN_HEIGHT = 14;
 
 		/// <summary>
 		/// Default animation delay
 		/// </summary>
-		public static readonly int ANIMATION_DELAY = 10;
+		public const int ANIMATION_DELAY = 10;
 
 		/// <summary>
 		/// Global physics gravity
 		/// </summary>
-		public static readonly float GRAVITY = 9.82f;
+		public const float GRAVITY = 500f;
 
-		public static readonly float RENDER_WIDTH  = 1280.0f;
-		public static readonly float RENDER_HEIGHT = 720.0f;
+		public const float RENDER_WIDTH  = 1280.0f;
+		public const float RENDER_HEIGHT = 720.0f;
 
 		public static readonly float TILE_WIDTH	 = RENDER_WIDTH  / (float)TILE_SCREEN_WIDTH;
 		public static readonly float TILE_HEIGHT = RENDER_HEIGHT / (float)TILE_SCREEN_HEIGHT;
+
+		public static readonly float LEVEL_SCROLL_X_MAX = RENDER_WIDTH * (3f/4f);
+		public static readonly float LEVEL_SCROLL_X_MIN = RENDER_WIDTH * (1f/4f);
 	}
 }

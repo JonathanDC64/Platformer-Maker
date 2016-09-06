@@ -1,5 +1,4 @@
-﻿using FarseerPhysics;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -66,7 +65,6 @@ namespace Platformer_Maker
 
 			targetBatch = new SpriteBatch(GraphicsDevice);
 			target = new RenderTarget2D(GraphicsDevice, (int)Metrics.RENDER_WIDTH, (int)Metrics.RENDER_HEIGHT);
-			ConvertUnits.SetDisplayUnitToSimUnitRatio(Metrics.TILE_WIDTH);
 			currentTileset = new G2D.Tileset(FileManager.ReadObjectFile<Models.Tileset>(DEFAULT_TILESET_FILE));
 			LoadTileset();
 			AddScreen(new LevelScreen(FileManager.ReadObjectFile<Level>("level1.lvl")));

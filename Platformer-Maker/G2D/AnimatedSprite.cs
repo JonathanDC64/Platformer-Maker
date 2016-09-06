@@ -8,10 +8,11 @@ namespace Platformer_Maker.G2D
 		public Texture2D CurrentFrame;
 		private int CurrentFrameIndex;
 		private int AnimationDelay;
-		public AnimatedSprite(Texture2D[] texture, Rectangle rect, Vector2 origin, int animationDelay)
+		public AnimatedSprite(Texture2D[] texture, Vector2 position, Vector2 bounds, Vector2 origin, int animationDelay)
 		{
 			Textures = texture;
-			Rect = rect;
+			Position = position;
+			Bounds = bounds;
 			Center = origin;
 			Rotation = 0.0f;
 			AnimationDelay = animationDelay;
