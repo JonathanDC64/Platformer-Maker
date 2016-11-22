@@ -25,7 +25,9 @@
 		/// <summary>
 		/// Global physics gravity
 		/// </summary>
-		public const float GRAVITY = 500f;
+		public const float GRAVITY = 55f;
+
+		public static readonly float MAX_GRAVITY = 10.0f * GRAVITY;
 
 		public const float RENDER_WIDTH  = 1280.0f;
 		public const float RENDER_HEIGHT = 720.0f;

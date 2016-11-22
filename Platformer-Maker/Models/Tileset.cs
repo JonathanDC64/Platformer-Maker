@@ -2,9 +2,19 @@
 {
 	public class Tileset
 	{
+		/// <summary>
+		/// Filename for image tileset image file
+		/// </summary>
 		public string FileName;
 
+		/// <summary>
+		/// Width of a single tile
+		/// </summary>
 		public int TileWidth;
+
+		/// <summary>
+		/// Height of a single tile
+		/// </summary>
 		public int TileHeight;
 
 		/// <summary>

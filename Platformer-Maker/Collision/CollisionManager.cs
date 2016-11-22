@@ -27,10 +27,10 @@ namespace Platformer_Maker.Collision
 		/// </summary>
 		/// <param name="gameObject"></param>
 		/// <param name="level"></param>
-		private static void HandleWalls(GameObject gameObject, ActiveLevel level, Axis axis, float offsetX, float offsetY)
+		private static void HandleWalls(GameObject gameObject, ActiveLevel level, Axis axis)
 		{
-			int startX = (int)((((gameObject.X - offsetX) / Metrics.TILE_WIDTH) - 1));
-			int startY = (int)((((gameObject.Y + offsetY) / Metrics.TILE_HEIGHT) - 1));
+			int startX = (int)((((gameObject.X - level.OffsetX) / Metrics.TILE_WIDTH) - 1));
+			int startY = (int)((((gameObject.Y + level.OffsetY) / Metrics.TILE_HEIGHT) - 1));
 			int stopX  =  startX + STEP_X  <= level.GameObjects.GetLength(1) ? startX + STEP_X : level.GameObjects.GetLength(1);
 			int stopY  =  startY + STEP_Y  <= level.GameObjects.GetLength(0) ? startY + STEP_Y : level.GameObjects.GetLength(0);
 			for(int y = startY; y < stopY; y++)
@@ -56,8 +56,8 @@ namespace Platformer_Maker.Collision
 					//Only process GameObjects that have collisions enabled
 					if (currentObject.Properties.Collisions)
 					{
-						currentObjectRect.X			= (int)(currentObject.X + offsetX);
-						currentObjectRect.Y			= (int)(currentObject.Y + offsetY);
+						currentObjectRect.X			= (int)(currentObject.X + level.OffsetX);
+						currentObjectRect.Y			= (int)(currentObject.Y + level.OffsetY);
 						currentObjectRect.Width		= (int)(currentObject.GetTileWidth());
 						currentObjectRect.Height	= (int)(currentObject.GetTileHeight());
 
@@ -65,7 +65,21 @@ namespace Platformer_Maker.Collision
 						{
 							Vector2 depth = GetIntersectionDepth(gameObject.Rect, currentObjectRect);
 							if (axis == Axis.Y)
+							{
 								gameObject.Y += depth.Y;
+
+								//If the player is jumping but touches the ground, stop jumping
+								if(gameObject.CurrentState == GameObject.State.Jumping && gameObject.Y <= currentObjectRect.Y)
+								{
+									gameObject.CurrentState = GameObject.State.Still;
+								}
+
+								//If the player is jumping and touches the ceiling, push him down
+								if(gameObject.CurrentState == GameObject.State.Jumping && gameObject.Y >= currentObjectRect.Y)
+								{
+									gameObject.VelocityY = -gameObject.VelocityY;
+								}
+							}
 							else if (axis == Axis.X)
 								gameObject.X += depth.X;
 						}
@@ -74,14 +88,14 @@ namespace Platformer_Maker.Collision
 			}	
 		}
 
-		public static void HandleWallsX(GameObject gameObject, ActiveLevel level, float offsetX, float offsetY)
+		public static void HandleWallsX(GameObject gameObject, ActiveLevel level)
 		{
-			HandleWalls(gameObject, level, Axis.X, offsetX, offsetY);
+			HandleWalls(gameObject, level, Axis.X);
 		}
 
-		public static void HandleWallsY(GameObject gameObject, ActiveLevel level, float offsetX, float offsetY)
+		public static void HandleWallsY(GameObject gameObject, ActiveLevel level)
 		{
-			HandleWalls(gameObject, level, Axis.Y, offsetX, offsetY);
+			HandleWalls(gameObject, level, Axis.Y);
 		}
 
 		public static Vector2 GetIntersectionDepth(this Rectangle rectA, Rectangle rectB)

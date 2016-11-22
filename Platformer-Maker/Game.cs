@@ -33,6 +33,8 @@ namespace Platformer_Maker
 		public static ContentManager contentManager;
 		public static G2D.Tileset currentTileset;
 
+		private static SpriteFont debugFont;
+
 
 		public static SpriteBatch targetBatch;
 		public static RenderTarget2D target;
@@ -68,7 +70,9 @@ namespace Platformer_Maker
 			currentTileset = new G2D.Tileset(FileManager.ReadObjectFile<Models.Tileset>(DEFAULT_TILESET_FILE));
 			LoadTileset();
 			AddScreen(new LevelScreen(FileManager.ReadObjectFile<Level>("level1.lvl")));
-			
+
+			debugFont = Content.Load<SpriteFont>("Fonts/wasco");
+
 			base.Initialize();
         }
 
@@ -116,14 +120,32 @@ namespace Platformer_Maker
 			Content.Unload();
         }
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Update(GameTime gameTime)
+
+
+		int _total_frames = 0;
+		float _elapsed_time = 0.0f;
+		int _fps = 0;
+
+		/// <summary>
+		/// Allows the game to run logic such as updating the world,
+		/// checking for collisions, gathering input, and playing audio.
+		/// </summary>
+		/// <param name="gameTime">Provides a snapshot of timing values.</param>
+		protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+			// Update
+
+			_elapsed_time += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+
+			// 1 Second has passed
+			if (_elapsed_time >= 1000.0f)
+			{
+				_fps = _total_frames;
+				_total_frames = 0;
+				_elapsed_time = 0;
+			}
+
+			if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 			
 			// TODO: Add your update logic here
@@ -144,12 +166,17 @@ namespace Platformer_Maker
             base.Update(gameTime);
         }
 
+
+		private Rectangle targetRect = new Rectangle();
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+			// Only update total frames when drawing
+			_total_frames++;
+
 			GraphicsDevice.SetRenderTarget(target);
 			//nearest neighboor scaling
 			spriteBatch.Begin(samplerState: SamplerState.PointClamp);
@@ -173,7 +200,11 @@ namespace Platformer_Maker
 
 			//render target to back buffer
 			targetBatch.Begin();
-			targetBatch.Draw(target, new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height), Color.White);
+			targetRect.Width = Window.ClientBounds.Width;
+			targetRect.Height = Window.ClientBounds.Height;
+			targetBatch.Draw(target, targetRect, Color.White);
+			targetBatch.DrawString(debugFont, string.Format("FPS={0} FrameTime={1}", _fps, gameTime.ElapsedGameTime.TotalSeconds),
+				new Vector2(10.0f, 20.0f), Color.White);
 			targetBatch.End();
 
 			base.Draw(gameTime);

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <SourceFile>D:/Platformer-Maker/Platformer-Maker/Content/Graphics/Mario.png</SourceFile>
-  <SourceTime>2016-08-23T09:21:25.0086655-04:00</SourceTime>
+  <SourceTime>2016-09-23T07:56:29.8135035-04:00</SourceTime>
   <DestFile>D:/Platformer-Maker/Platformer-Maker/Content/bin/DesktopGL/Graphics/Mario.xnb</DestFile>
-  <DestTime>2016-08-23T09:21:44.8297292-04:00</DestTime>
+  <DestTime>2016-11-22T13:57:34.4536937-05:00</DestTime>
   <Importer>TextureImporter</Importer>
   <ImporterTime>2016-03-30T02:36:08-04:00</ImporterTime>
   <Processor>TextureProcessor</Processor>

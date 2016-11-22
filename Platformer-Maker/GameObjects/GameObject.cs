@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Platformer_Maker.G2D;
-using System;
+using Platformer_Maker.GameObjects.Behaviors;
 using System.Collections.Generic;
 
 namespace Platformer_Maker.GameObjects
@@ -24,6 +24,10 @@ namespace Platformer_Maker.GameObjects
 			Dying
 		}
 
+		public State CurrentState { get; set; }
+
+		public List<GameObjectBehavior> Behaviors { get; set; }
+
 		/// <summary>
 		/// Information on the game object
 		/// (Id, Name, etc).
@@ -37,8 +41,6 @@ namespace Platformer_Maker.GameObjects
 		/// in the Initialize Function
 		/// </summary>
 		public Dictionary<State, AnimatedSprite> Sprites { get; set; }
-
-		public State CurrentState { get; protected set; }
 
 		public AnimatedSprite CurrentSprite
 		{
@@ -70,6 +72,7 @@ namespace Platformer_Maker.GameObjects
 			Height = Properties.Height;
 			VelocityX = 0f;
 			VelocityY = 0f;
+			Behaviors = new List<GameObjectBehavior>();
 		}
 
 		/// <summary>
@@ -85,8 +88,8 @@ namespace Platformer_Maker.GameObjects
 		/// <param name="gameTime"></param>
 		public virtual void Update(GameTime gameTime)
 		{
-			
-			
+			foreach(GameObjectBehavior behavior in Behaviors)
+				behavior.Execute(this);
 		}
 
 		public void UpdateX(GameTime gameTime)
@@ -101,7 +104,7 @@ namespace Platformer_Maker.GameObjects
 
 		public void ApplyPhysics(GameTime gameTime)
 		{
-			Y += Metrics.GRAVITY * (float)gameTime.ElapsedGameTime.TotalSeconds;
+			VelocityY = VelocityY >= Metrics.MAX_GRAVITY ? Metrics.MAX_GRAVITY : VelocityY + Metrics.GRAVITY;
 		}
 
 		private Vector2 scale;

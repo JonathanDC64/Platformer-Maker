@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PipelineBuildEvent xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <SourceFile>D:/Platformer-Maker/Platformer-Maker/Content/Fonts/wasco.spritefont</SourceFile>
+  <SourceTime>2016-11-22T14:01:34.1072615-05:00</SourceTime>
+  <DestFile>D:/Platformer-Maker/Platformer-Maker/Content/bin/DesktopGL/Fonts/wasco.xnb</DestFile>
+  <DestTime>2016-11-22T14:03:03.5765986-05:00</DestTime>
+  <Importer>FontDescriptionImporter</Importer>
+  <ImporterTime>2016-03-30T02:36:08-04:00</ImporterTime>
+  <Processor>FontDescriptionProcessor</Processor>
+  <ProcessorTime>2016-03-30T02:36:08-04:00</ProcessorTime>
+  <Parameters>
+    <Key>TextureFormat</Key>
+    <Value>Compressed</Value>
+  </Parameters>
+  <Dependencies />
+  <BuildAsset />
+  <BuildOutput />
+</PipelineBuildEvent>

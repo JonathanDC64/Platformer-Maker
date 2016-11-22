@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using Platformer_Maker.Input;
+using Platformer_Maker.GameObjects.Behaviors;
 
 namespace Platformer_Maker.GameObjects
 {
@@ -17,23 +17,8 @@ namespace Platformer_Maker.GameObjects
 		{
 			CurrentState = State.Still;
 			Sprites[State.Still] = GenerateAnimatedSprite(Properties.ID);
-		}
-
-		int speed = 500;
-		int jump  = 1000;
-		public override void Update(GameTime gameTime)
-		{
-			VelocityX = 0;
-			VelocityY = 0;
-			if (InputManager.Inputs[KeyNames.LEFT])
-				VelocityX = -speed;
-			if (InputManager.Inputs[KeyNames.RIGHT])
-				VelocityX = speed;
-			if (InputManager.Inputs[KeyNames.UP])
-				VelocityY = -jump;
-			if (InputManager.Inputs[KeyNames.DOWN])
-				VelocityY = speed;
-			base.Update(gameTime);
+			Sprites[State.Jumping] = GenerateAnimatedSprite(Properties.ID);
+			Behaviors.Add(new Controllable());
 		}
 	}
 }

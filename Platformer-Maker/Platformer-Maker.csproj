@@ -46,6 +46,8 @@
     <Compile Include="G2D\AnimatedSprite.cs" />
     <Compile Include="G2D\Entity.cs" />
     <Compile Include="G2D\Metrics.cs" />
+    <Compile Include="GameObjects\Behaviors\Controllable.cs" />
+    <Compile Include="GameObjects\Behaviors\GameObjectBehavior.cs" />
     <Compile Include="GameObjects\GameObject.cs" />
     <Compile Include="GameObjects\GameObjectFactory.cs" />
     <Compile Include="GameObjects\GameObjectID.cs" />

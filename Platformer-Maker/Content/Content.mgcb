@@ -73,3 +73,9 @@
 /processorParam:TextureFormat=Color
 /build:Graphics/tileset.png
 
+#begin Fonts\wasco.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:TextureFormat=Compressed
+/build:Fonts\wasco.spritefont
+

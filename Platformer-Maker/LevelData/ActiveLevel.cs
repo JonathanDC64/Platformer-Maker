@@ -6,7 +6,9 @@ using Platformer_Maker.Models;
 namespace Platformer_Maker.LevelData
 {
 	/// <summary>
-	/// Level with GameObjects as opposed to ids
+	/// Level with GameObjects as opposed to ids.
+	/// This is the currently running level
+	/// as opposed to a Level Model
 	/// </summary>
 	public class ActiveLevel
 	{
@@ -68,9 +70,38 @@ namespace Platformer_Maker.LevelData
 
 			Player.SetTileX((int)OriginalLevel.StartPoint.X);
 			Player.SetTileY((int)OriginalLevel.StartPoint.Y);
+
+			// What was this for???
 			Player.X = Player.X;
 			Player.Y = Player.Y;
+
+
 			Player.Initialize();
+		}
+
+		public void UpdateOffset(GameTime gameTime)
+		{
+			if (OffsetX > 0)
+			{
+				OffsetX = 0;
+			}
+
+			if (OffsetX < -Width + Metrics.RENDER_WIDTH)
+			{
+				OffsetX = -Width + Metrics.RENDER_WIDTH;
+			}
+
+
+			if (Player.X > Metrics.LEVEL_SCROLL_X_MAX && OffsetX != -Width + Metrics.RENDER_WIDTH)
+			{
+				Player.X = Metrics.LEVEL_SCROLL_X_MAX;
+				OffsetX -= Player.VelocityX * (float)gameTime.ElapsedGameTime.TotalSeconds;
+			}
+			if (Player.X < Metrics.LEVEL_SCROLL_X_MIN && OffsetX != 0)
+			{
+				Player.X = Metrics.LEVEL_SCROLL_X_MIN;
+				OffsetX -= Player.VelocityX * (float)gameTime.ElapsedGameTime.TotalSeconds;
+			}
 		}
 	}
 }
