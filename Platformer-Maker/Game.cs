@@ -203,8 +203,8 @@ namespace Platformer_Maker
 			targetRect.Width = Window.ClientBounds.Width;
 			targetRect.Height = Window.ClientBounds.Height;
 			targetBatch.Draw(target, targetRect, Color.White);
-			targetBatch.DrawString(debugFont, string.Format("FPS={0} FrameTime={1}", _fps, gameTime.ElapsedGameTime.TotalSeconds),
-				new Vector2(10.0f, 20.0f), Color.White);
+			targetBatch.DrawString(debugFont, "FPS=" + _fps +" FrameTime=" + gameTime.ElapsedGameTime.TotalSeconds,
+				new Vector2(0.0f, 0.0f), Color.White);
 			targetBatch.End();
 
 			base.Draw(gameTime);

@@ -77,7 +77,7 @@ namespace Platformer_Maker.Collision
 								//If the player is jumping and touches the ceiling, push him down
 								if(gameObject.CurrentState == GameObject.State.Jumping && gameObject.Y >= currentObjectRect.Y)
 								{
-									gameObject.VelocityY = -gameObject.VelocityY;
+									gameObject.VelocityY = 0;
 								}
 							}
 							else if (axis == Axis.X)
